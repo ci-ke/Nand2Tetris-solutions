@@ -1,0 +1,143 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Memory.jack
+
+/**
+ * This library provides two services: direct access to the computer's main
+ * memory (RAM), and allocation and recycling of memory blocks. The Hack RAM
+ * consists of 32,768 words, each holding a 16-bit binary number.
+ */ 
+class Memory {
+
+    static Array RAM_BASE;
+    static int HEAP_BASE,HEAP_MAX;
+    static Array free_list;
+
+    /** Initializes the class. */
+    function void init() {
+        let RAM_BASE=0;
+        let HEAP_BASE=2048;
+        let HEAP_MAX=16383;
+
+        let free_list=2048;
+        let free_list[0]=(HEAP_MAX-HEAP_BASE)+1;
+        let free_list[1]=null;
+        return;
+    }
+
+    /** Returns the RAM value at the given address. */
+    function int peek(int address) {
+        return RAM_BASE[address];
+    }
+
+    /** Sets the RAM value at the given address to the given value. */
+    function void poke(int address, int value) {
+        let RAM_BASE[address]=value;
+        return;
+    }
+
+    /** Finds an available RAM block of the given size and returns
+     *  a reference to its base address. */
+    function Array alloc(int size) {
+        var Array cur_block,last_block;
+        var boolean merged;
+
+        if(size<1){
+            do Sys.error(5); // Allocated memory size must be positive
+        }
+
+        if(free_list=null){
+            do Sys.error(6); // Heap overflow
+        }
+
+        let merged=false;
+        let cur_block=free_list;
+        let last_block=null;
+
+        while(size>(cur_block[0]-1)){
+            let last_block=cur_block;
+            let cur_block=cur_block[1];
+
+            if(cur_block=null){
+                if(merged){
+                    do Sys.error(6); // Heap overflow
+                }
+                else{
+                    let cur_block=free_list;
+                    let last_block=null;
+                    do Memory.merge_block();
+                    let merged=true;
+                }
+            }
+        }
+
+        if(size<(cur_block[0]-3)){
+            let cur_block[0]=cur_block[0]-(size+1);
+            let cur_block=cur_block+cur_block[0]+1;
+            let cur_block[-1]=size+1;
+            return cur_block;
+        }
+        else{
+            if(last_block=null){
+                let free_list=cur_block[1];
+            }
+            else{
+                let last_block[1]=cur_block[1];
+            }
+            return cur_block+1;
+        }
+    }
+
+    function void merge_block(){
+        var Array cur_block,last_block,pointer;
+        var boolean searching;
+
+        let cur_block=free_list;
+        let last_block=null;
+        while(~(cur_block=null)){
+            let pointer=free_list;
+            let searching=true;
+            while( (~(pointer=null)) & searching ){
+                if(cur_block=(pointer+pointer[0])){
+                    let pointer[0]=pointer[0]+cur_block[0];
+                    if(last_block=null){
+                        let free_list=cur_block[1];
+                    }
+                    else{
+                        let last_block[1]=cur_block[1];
+                    }
+                    let searching=false;
+                }
+                let pointer=pointer[1];
+            }
+            if(searching){
+                let last_block=cur_block;
+                let cur_block=cur_block[1];
+            }
+            else{
+                let last_block=null;
+                let cur_block=free_list;
+            }
+        }
+        return;
+    }
+
+    /** De-allocates the given object (cast as an array) by making
+     *  it available for future allocations. */
+    function void deAlloc(Array o) {
+        var Array seg;
+
+        let seg=o-1;
+        if(free_list=null){
+            let free_list=seg;
+            let seg[1]=null;
+        }
+        else{
+            let seg[1]=free_list;
+            let free_list=seg;
+        }
+        //do Memory.merge_block();
+        return;
+    }
+}

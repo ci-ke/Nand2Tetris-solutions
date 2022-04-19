@@ -1,0 +1,106 @@
+function Main.main 1
+push constant 8001
+push constant 16
+push constant 1
+neg
+call Main.fillMemory 3
+pop temp 7
+push constant 8000
+call Memory.peek 1
+pop local 0
+push local 0
+call Main.convert 1
+pop temp 7
+push constant 0
+return
+function Main.convert 3
+push constant 1
+neg
+pop local 2
+label WL1:0
+push local 2
+not
+if-goto WL2:0
+push local 1
+push constant 1
+add
+pop local 1
+push local 0
+call Main.nextMask 1
+pop local 0
+push local 1
+push constant 16
+gt
+not
+not
+if-goto IF1:0
+push argument 0
+push local 0
+and
+push constant 0
+eq
+not
+not
+if-goto IF1:1
+push constant 8000
+push local 1
+add
+push constant 1
+call Memory.poke 2
+pop temp 7
+goto IF2:1
+label IF1:1
+push constant 8000
+push local 1
+add
+push constant 0
+call Memory.poke 2
+pop temp 7
+label IF2:1
+goto IF2:0
+label IF1:0
+push constant 0
+pop local 2
+label IF2:0
+goto WL1:0
+label WL2:0
+push constant 0
+return
+function Main.nextMask 0
+push argument 0
+push constant 0
+eq
+not
+if-goto IF1:2
+push constant 1
+return
+goto IF2:2
+label IF1:2
+push argument 0
+push constant 2
+call Math.multiply 2
+return
+label IF2:2
+function Main.fillMemory 0
+label WL1:1
+push argument 1
+push constant 0
+gt
+not
+if-goto WL2:1
+push argument 0
+push argument 2
+call Memory.poke 2
+pop temp 7
+push argument 1
+push constant 1
+sub
+pop argument 1
+push argument 0
+push constant 1
+add
+pop argument 0
+goto WL1:1
+label WL2:1
+push constant 0
+return
