@@ -268,6 +268,37 @@ push constant 0
 gt
 not
 if-goto WHILE_END0
+push local 3
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push local 0
+push this 0
+push constant 2
+sub
+gt
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push constant 19
+call Sys.error 1
+pop temp 0
+label IF_FALSE2
+goto IF_END1
+label IF_FALSE1
+push local 0
+push this 0
+push constant 1
+sub
+gt
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 19
+call Sys.error 1
+pop temp 0
+label IF_FALSE3
+label IF_END1
 push argument 1
 push constant 10
 push argument 1
@@ -298,35 +329,6 @@ call Math.divide 2
 pop argument 1
 goto WHILE_EXP0
 label WHILE_END0
-push local 3
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
-push local 0
-push this 0
-push constant 1
-sub
-gt
-if-goto IF_TRUE2
-goto IF_FALSE2
-label IF_TRUE2
-push constant 19
-call Sys.error 1
-pop temp 0
-label IF_FALSE2
-goto IF_END1
-label IF_FALSE1
-push local 0
-push this 0
-gt
-if-goto IF_TRUE3
-goto IF_FALSE3
-label IF_TRUE3
-push constant 19
-call Sys.error 1
-pop temp 0
-label IF_FALSE3
-label IF_END1
 push local 3
 if-goto IF_TRUE4
 goto IF_FALSE4

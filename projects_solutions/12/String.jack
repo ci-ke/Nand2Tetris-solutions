@@ -140,22 +140,22 @@ class String {
         }
 
         while(val>0){
+            if(is_neg){
+                if(i>(max_len-2)){
+                    do Sys.error(19); // Insufficient string capacity
+                }
+            }
+            else{
+                if(i>(max_len-1)){
+                    do Sys.error(19); // Insufficient string capacity
+                }
+            }
+
             let num=val-(10*(val/10));
             let ch=num+48;
             let store[i]=ch;
             let i=i+1;
             let val=val/10;
-        }
-
-        if(is_neg){
-            if(i>(max_len-1)){
-                do Sys.error(19); // Insufficient string capacity
-            }
-        }
-        else{
-            if(i>max_len){
-                do Sys.error(19); // Insufficient string capacity
-            }
         }
 
         if(is_neg){
