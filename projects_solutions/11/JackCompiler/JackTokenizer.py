@@ -161,7 +161,7 @@ class JackTokenizer:
         elif self.__current_token[0] == '"' and self.__current_token[-1] == '"':
             return TOKEN_TYPE.STRING_CONST
         else:
-            self.wrong_msg(f'IFlegal identifier "{self.__current_token}"')
+            self.wrong_msg(f'Illegal identifier "{self.__current_token}"')
 
     def keyword(self) -> str:
         assert self.token_type() == TOKEN_TYPE.KEYWORD
