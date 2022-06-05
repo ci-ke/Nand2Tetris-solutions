@@ -1,4 +1,5 @@
 import os
+from typing import NoReturn
 from .common import *
 
 
@@ -82,7 +83,7 @@ class Parser:
         except ValueError:
             self.wrong_msg('Bad command arg2')
 
-    def wrong_msg(self, msg: str):
+    def wrong_msg(self, msg: str) -> NoReturn:
         raise CompileError(
             f'{self.__pathname}, line {self.__line_no[self.__next_index-1]}: {msg}'
         )

@@ -1,4 +1,5 @@
 import os
+from typing import NoReturn
 from .common import *
 
 
@@ -203,7 +204,7 @@ class JackTokenizer:
     def module_name(self) -> str:
         return self.__filename_root
 
-    def wrong_msg(self, msg: str):
+    def wrong_msg(self, msg: str) -> NoReturn:
         raise CompileError(
             f'{self.__pathname}, line {self.__current_token_line}: {msg}'
         )

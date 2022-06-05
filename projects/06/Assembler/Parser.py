@@ -1,4 +1,5 @@
 import os
+from typing import NoReturn
 from .common import *
 
 
@@ -85,7 +86,7 @@ class Parser:
         else:
             return ''
 
-    def wrong_msg(self, msg: str):
+    def wrong_msg(self, msg: str) -> NoReturn:
         raise CompileError(
             f'{self.__pathname}, line {self.__line_no[self.__next_index-1]}: {msg}'
         )
