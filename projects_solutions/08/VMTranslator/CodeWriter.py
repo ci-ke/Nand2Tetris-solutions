@@ -1,3 +1,5 @@
+from typing import List
+
 from .common import *
 
 
@@ -118,7 +120,7 @@ class CodeWriter:
 
     def __init__(self, pathname: str) -> None:
         self.__pathname = pathname
-        self.__asm_codes = []
+        self.__asm_codes: List[str] = []
         self.__label_index = 0
 
     def set_file_name(self, parsing_filename: str) -> None:

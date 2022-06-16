@@ -1,5 +1,6 @@
 import os
-from typing import NoReturn
+from typing import List, NoReturn
+
 from .common import *
 
 
@@ -27,10 +28,10 @@ class Parser:
     def __init__(self, pathname: str) -> None:
         self.__pathname = pathname
         self.__filename_root = os.path.splitext(os.path.basename(pathname))[0]
-        self.__file_lines = []
-        self.__line_no = []
+        self.__file_lines: List[List[str]] = []
+        self.__line_no: List[int] = []
 
-        self.__current_command = []
+        self.__current_command: List[str] = []
         self.__next_index = 0
 
         if not os.path.isfile(pathname):

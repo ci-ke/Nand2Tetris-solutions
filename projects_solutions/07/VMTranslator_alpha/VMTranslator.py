@@ -1,4 +1,5 @@
 import os
+
 from .common import *
 from .Parser import Parser
 from .CodeWriter import CodeWriter
@@ -7,11 +8,11 @@ from .CodeWriter import CodeWriter
 class VMTranslator:
     def __init__(self, pathname: str) -> None:
         self.__pathname = os.path.normpath(pathname)
+        asm_pathname = os.path.splitext(self.__pathname)[0] + '.asm'
+        self.__codewriter = CodeWriter(asm_pathname)
 
     def __init(self) -> None:
         self.__parser = Parser(self.__pathname)
-        asm_pathname = os.path.splitext(self.__pathname)[0] + '.asm'
-        self.__codewriter = CodeWriter(asm_pathname)
 
     def __process(self, parser: Parser) -> None:
         self.__codewriter.set_file_name(parser.module_name())

@@ -1,18 +1,19 @@
+from typing import List
+
 from .common import *
 from .JackTokenizer import JackTokenizer
 from .SymbolTable import SymbolTable
 from .VMWriter import VMWriter
+
 
 class CompilationEngine:
     __func = {
         TOKEN_TYPE.KEYWORD: JackTokenizer.keyword,
         TOKEN_TYPE.SYMBOL: JackTokenizer.symbol,
         TOKEN_TYPE.IDENTIFIER: JackTokenizer.identifier,
-        TOKEN_TYPE.INT_CONST: JackTokenizer.int_val,
-        TOKEN_TYPE.STRING_CONST: JackTokenizer.string_val,
     }
 
-    def __init__(self, tokenizer: JackTokenizer, output_list: list) -> None:
+    def __init__(self, tokenizer: JackTokenizer, output_list: List[str]) -> None:
         self.__tokenizer = tokenizer
         self.__symbol_table = SymbolTable()
         self.__writer = VMWriter(output_list)

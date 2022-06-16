@@ -1,4 +1,5 @@
 import sys
+
 from .Assembler import Assembler
 
 if __name__ == '__main__':

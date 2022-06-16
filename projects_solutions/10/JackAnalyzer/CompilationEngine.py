@@ -1,3 +1,5 @@
+from typing import List
+
 from .common import *
 from .JackTokenizer import JackTokenizer
 
@@ -11,7 +13,7 @@ class CompilationEngine:
         TOKEN_TYPE.STRING_CONST: JackTokenizer.string_val,
     }
 
-    def __init__(self, tokenizer: JackTokenizer, output_list: list) -> None:
+    def __init__(self, tokenizer: JackTokenizer, output_list: List[str]) -> None:
         self.__xml_indent = 0
         self.__tokenizer = tokenizer
         self.__output_list = output_list

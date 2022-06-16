@@ -1,3 +1,6 @@
+from typing import Dict
+
+
 class SymbolTable:
     __PREDEFINED_SYMBOL = {
         'SP': 0,
@@ -26,7 +29,7 @@ class SymbolTable:
     }
 
     def __init__(self) -> None:
-        self.__table = {}
+        self.__table: Dict[str, int] = {}
         self.__table.update(self.__PREDEFINED_SYMBOL)
 
     def add_entry(self, symbol: str, address: int) -> None:

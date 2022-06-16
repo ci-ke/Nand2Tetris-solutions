@@ -1,4 +1,5 @@
 import sys
+
 from .VMTranslator import VMTranslator
 
 if __name__ == '__main__':

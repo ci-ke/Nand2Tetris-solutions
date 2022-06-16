@@ -1,11 +1,12 @@
 import sys, os
+
 from JackCompiler.JackCompiler import JackCompiler
 
 dirs = ['Average', 'ComplexArrays', 'ConvertToBin', 'Pong', 'Seven', 'Square']
 
 if __name__ == '__main__':
     if len(sys.argv) != 2 or (sys.argv[1] not in {'build', 'clean', 'open'}):
-        sys.exit(print('Usage: python make.py <build|clean|open>'))
+        sys.exit(print('Usage: python make.py <build | clean | open>'))
 
     if sys.argv[1] == 'build':
         for d in dirs:
@@ -25,6 +26,6 @@ if __name__ == '__main__':
         srcpath = os.getcwd()
         os.chdir('../../tools/bin')
         tgtpath = os.getcwd()
-        with open(tgtpath + '/' + 'Virtual Machine Emulator.dat', 'w') as f:
-            f.write(srcpath + '\n')
+        with open(tgtpath + '/' + 'Virtual Machine Emulator.dat', 'w') as fp:
+            fp.write(srcpath + '\n')
         os.system('..\\VMEmulator.bat')

@@ -1,9 +1,12 @@
+from typing import Dict, Tuple
+
 from .common import *
+
 
 class SymbolTable:
     def __init__(self) -> None:
-        self.__class_scope = {}
-        self.__method_scope = {}
+        self.__class_scope: Dict[str, Tuple[str, SCOPE_TYPE, int]] = {}
+        self.__method_scope: Dict[str, Tuple[str, SCOPE_TYPE, int]] = {}
         self.__index = {
             SCOPE_TYPE.STATIC: 0,
             SCOPE_TYPE.FIELD: 0,

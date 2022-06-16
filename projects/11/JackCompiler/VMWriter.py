@@ -1,6 +1,9 @@
+from typing import List
+
+
 class VMWriter:
-    def __init__(self, output_list: list) -> None:
-        self.__output_list = output_list
+    def __init__(self, output_list: List[str]) -> None:
+        self.__output_list: List[str] = output_list
 
     def write_push(self, segment: str, index: int) -> None:
         assert segment in {

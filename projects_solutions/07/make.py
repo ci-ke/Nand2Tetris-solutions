@@ -1,4 +1,5 @@
 import sys, os
+
 from VMTranslator_alpha.VMTranslator import VMTranslator
 
 files = [
@@ -11,7 +12,7 @@ files = [
 
 if __name__ == '__main__':
     if len(sys.argv) != 2 or (sys.argv[1] not in {'build', 'clean', 'open'}):
-        sys.exit(print('Usage: python make.py <build|clean|open>'))
+        sys.exit(print('Usage: python make.py <build | clean | open>'))
 
     if sys.argv[1] == 'build':
         for f in files:
@@ -28,6 +29,6 @@ if __name__ == '__main__':
         srcpath = os.getcwd()
         os.chdir('../../tools/bin')
         tgtpath = os.getcwd()
-        with open(tgtpath + '/' + 'CPU Emulator.dat', 'w') as f:
-            f.write(srcpath + '\n')
+        with open(tgtpath + '/' + 'CPU Emulator.dat', 'w') as fp:
+            fp.write(srcpath + '\n')
         os.system('..\\CPUEmulator.bat')

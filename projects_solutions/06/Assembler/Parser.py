@@ -1,13 +1,14 @@
 import os
-from typing import NoReturn
+from typing import List, NoReturn
+
 from .common import *
 
 
 class Parser:
     def __init__(self, pathname: str) -> None:
         self.__pathname = pathname
-        self.__file_lines = []
-        self.__line_no = []
+        self.__file_lines: List[str] = []
+        self.__line_no: List[int] = []
 
         self.__current_command = ''
         self.__next_index = 0
@@ -53,7 +54,7 @@ class Parser:
             if not SymbolChecker.legal_symbol(symbol):
                 self.wrong_msg('Bad L_COMMAND symbol')
             return symbol
-        elif self.command_type() == COMMAND_TYPE.A_COMMAND:
+        else:
             symbol = self.__current_command[1:]
             if not SymbolChecker.legal_symbol(symbol) and not SymbolChecker.legal_const(
                 symbol
@@ -74,9 +75,9 @@ class Parser:
 
         index1 = self.__current_command.find('=')
         index2 = self.__current_command.find(';')
-        index1 = index1 + 1 if index1 != -1 else None
-        index2 = index2 if index2 != -1 else None
-        return self.__current_command[index1:index2]
+        start = index1 + 1 if index1 != -1 else None
+        end = index2 if index2 != -1 else None
+        return self.__current_command[start:end]
 
     def jump(self) -> str:
         assert self.command_type() == COMMAND_TYPE.C_COMMAND

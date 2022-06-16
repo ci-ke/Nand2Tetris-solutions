@@ -4,7 +4,7 @@ files = ['Array', 'Keyboard', 'Math', 'Memory', 'Output', 'Screen', 'String', 'S
 
 if __name__ == '__main__':
     if len(sys.argv) != 2 or (sys.argv[1] not in {'build', 'clean', 'open'}):
-        sys.exit(print('Usage: python make.py <build|clean|open>'))
+        sys.exit(print('Usage: python make.py <build | clean | open>'))
 
     if sys.argv[1] == 'build':
         os.system(f'..\\..\\tools\\JackCompiler.bat .')
@@ -50,6 +50,6 @@ if __name__ == '__main__':
         srcpath = os.getcwd()
         os.chdir('../../tools/bin')
         tgtpath = os.getcwd()
-        with open(tgtpath + '/' + 'Virtual Machine Emulator.dat', 'w') as f:
-            f.write(srcpath + '\n')
+        with open(tgtpath + '/' + 'Virtual Machine Emulator.dat', 'w') as fp:
+            fp.write(srcpath + '\n')
         os.system('..\\VMEmulator.bat')

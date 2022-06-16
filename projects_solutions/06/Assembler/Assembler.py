@@ -1,4 +1,6 @@
 import os
+from typing import List
+
 from .common import *
 from .Parser import Parser
 from . import Code
@@ -8,12 +10,12 @@ from .SymbolTable import SymbolTable
 class Assembler:
     def __init__(self, pathname: str) -> None:
         self.__pathname = os.path.normpath(pathname)
-        self.__hack_codes = []
+        self.__hack_codes: List[str] = []
         self.__next_var_addr = 16
-
-    def __init(self) -> None:
-        self.__parser = Parser(self.__pathname)
         self.__symboltable = SymbolTable()
+
+    def __init(self) -> None:  # def separate function to catch CompileError in run()
+        self.__parser = Parser(self.__pathname)
 
     def __first_pass(self) -> None:
         current_rom_addr = 0

@@ -1,4 +1,6 @@
 import os
+from typing import List
+
 from .common import *
 from .JackTokenizer import JackTokenizer
 from .CompilationEngine import CompilationEngine
@@ -7,23 +9,23 @@ from .CompilationEngine import CompilationEngine
 class JackAnalyzer:
     def __init__(self, pathname: str) -> None:
         self.__pathname = os.path.normpath(pathname)
+        self.__tokenizer: List[JackTokenizer] = []
 
     def __init(self) -> None:
         if os.path.isdir(self.__pathname):
-            self.__is_dirpath = True
+            is_dirpath = True
         elif os.path.isfile(self.__pathname):
-            self.__is_dirpath = False
+            is_dirpath = False
         else:
             raise CompileError(f'No such file: {self.__pathname}')
 
-        if not self.__is_dirpath:
+        if not is_dirpath:
             self.__output_dirpath = os.path.join(
                 os.path.dirname(self.__pathname), 'output'
             )
-            self.__tokenizer = [JackTokenizer(self.__pathname)]
+            self.__tokenizer.append(JackTokenizer(self.__pathname))
         else:
             self.__output_dirpath = os.path.join(self.__pathname, 'output')
-            self.__tokenizer = []
             dirfiles = os.listdir(self.__pathname)
             for filename in dirfiles:
                 if os.path.splitext(filename)[1] == '.jack':
@@ -84,7 +86,7 @@ class JackAnalyzer:
         print(f'Output: {self.__xmlT_pathname(tokenizer)}')
 
     def __process(self, tokenizer: JackTokenizer) -> None:
-        output_list = []
+        output_list: List[str] = []
         CompilationEngine(tokenizer, output_list)
 
         with open(self.__xml_pathname(tokenizer), 'w') as f:

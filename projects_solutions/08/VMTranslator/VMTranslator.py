@@ -1,4 +1,6 @@
 import os
+from typing import List, Set
+
 from .common import *
 from .Parser import Parser
 from .CodeWriter import CodeWriter
@@ -7,7 +9,8 @@ from .CodeWriter import CodeWriter
 class VMTranslator:
     def __init__(self, pathname: str) -> None:
         self.__pathname = os.path.normpath(pathname)
-        self.__declared_function = set()
+        self.__declared_function: Set[str] = set()
+        self.__parsers: List[Parser] = []
 
     def __init(self) -> None:
         if os.path.isdir(self.__pathname):
@@ -18,10 +21,9 @@ class VMTranslator:
             raise CompileError(f'No such file: {self.__pathname}')
 
         if not self.__is_dirpath:
-            self.__parsers = [Parser(self.__pathname)]
+            self.__parsers.append(Parser(self.__pathname))
             asm_pathname = os.path.splitext(self.__pathname)[0] + '.asm'
         else:
-            self.__parsers = []
             dirfiles = os.listdir(self.__pathname)
             for filename in dirfiles:
                 if os.path.splitext(filename)[1] == '.vm':
