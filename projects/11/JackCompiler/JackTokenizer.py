@@ -1,5 +1,5 @@
 import os
-from typing import NoReturn
+from typing import NoReturn, Tuple
 
 from .common import *
 
@@ -125,7 +125,7 @@ class JackTokenizer:
 
         self.__current_token = self.__source[start_index : self.__next_index]
 
-    def look_ahead(self) -> tuple:
+    def look_ahead(self) -> Tuple[str, TOKEN_TYPE]:
         backup = (
             self.__current_token,
             self.__next_index,

@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from .common import *
 from .JackTokenizer import JackTokenizer
@@ -25,7 +25,9 @@ class CompilationEngine:
         self.__get_token()
         self.compile_class()
 
-    def __expect_token(self, token_type: TOKEN_TYPE, target: str = None) -> None:
+    def __expect_token(
+        self, token_type: TOKEN_TYPE, target: Optional[str] = None
+    ) -> None:
         if target is None:
             if self.__tokenizer.token_type() == token_type:
                 return
@@ -40,7 +42,9 @@ class CompilationEngine:
             else:
                 self.__tokenizer.wrong_msg(f'Expecting {target}')
 
-    def __get_token(self, token_type: TOKEN_TYPE = None, target: str = None) -> None:
+    def __get_token(
+        self, token_type: Optional[TOKEN_TYPE] = None, target: Optional[str] = None
+    ) -> None:
         if token_type is None:
             if not self.__tokenizer.has_more_tokens():
                 self.__tokenizer.wrong_msg(
