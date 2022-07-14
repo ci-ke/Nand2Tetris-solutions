@@ -1,6 +1,6 @@
 from typing import Dict, Tuple
 
-from .common import *
+from .common import SCOPE_TYPE
 
 
 class SymbolTable:

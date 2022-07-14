@@ -31,6 +31,6 @@ if __name__ == '__main__':
         srcpath = os.getcwd()
         os.chdir('../../tools/bin')
         tgtpath = os.getcwd()
-        with open(tgtpath + '/' + 'Assembler.dat', 'w') as fp:
+        with open(tgtpath + '/' + 'Assembler.dat', 'w', encoding='utf8') as fp:
             fp.write(srcpath + '\n')
         os.system('..\\Assembler.bat')

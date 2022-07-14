@@ -1,6 +1,6 @@
 import os
 
-from .common import *
+from .common import CompileError, COMMAND_TYPE
 from .Parser import Parser
 from .CodeWriter import CodeWriter
 

@@ -1,6 +1,6 @@
 from typing import List
 
-from .common import *
+from .common import COMMAND_TYPE
 
 
 class CodeWriter:
@@ -128,38 +128,38 @@ class CodeWriter:
 
     def write_arithmetic(self, command: str) -> None:
         if command == 'add':
-            code = list(self.__asmcode_add)
+            code = list(CodeWriter.__asmcode_add)
         elif command == 'sub':
-            code = list(self.__asmcode_add)
-            code[self.__asmcode_add_replace] = 'D=D-M\n'
+            code = list(CodeWriter.__asmcode_add)
+            code[CodeWriter.__asmcode_add_replace] = 'D=D-M\n'
         elif command == 'neg':
-            code = list(self.__asmcode_neg)
+            code = list(CodeWriter.__asmcode_neg)
         elif command == 'eq':
-            code = list(self.__asmcode_eq)
-            for i in self.__asmcode_eq_format:
+            code = list(CodeWriter.__asmcode_eq)
+            for i in CodeWriter.__asmcode_eq_format:
                 code[i] = code[i].format(self.__label_index)
             self.__label_index += 1
         elif command == 'gt':
-            code = list(self.__asmcode_eq)
-            code[self.__asmcode_eq_replace] = 'D;JGT\n'
-            for i in self.__asmcode_eq_format:
+            code = list(CodeWriter.__asmcode_eq)
+            code[CodeWriter.__asmcode_eq_replace] = 'D;JGT\n'
+            for i in CodeWriter.__asmcode_eq_format:
                 code[i] = code[i].format(self.__label_index)
             self.__label_index += 1
         elif command == 'lt':
-            code = list(self.__asmcode_eq)
-            code[self.__asmcode_eq_replace] = 'D;JLT\n'
-            for i in self.__asmcode_eq_format:
+            code = list(CodeWriter.__asmcode_eq)
+            code[CodeWriter.__asmcode_eq_replace] = 'D;JLT\n'
+            for i in CodeWriter.__asmcode_eq_format:
                 code[i] = code[i].format(self.__label_index)
             self.__label_index += 1
         elif command == 'and':
-            code = list(self.__asmcode_add)
-            code[self.__asmcode_add_replace] = 'D=D&M\n'
+            code = list(CodeWriter.__asmcode_add)
+            code[CodeWriter.__asmcode_add_replace] = 'D=D&M\n'
         elif command == 'or':
-            code = list(self.__asmcode_add)
-            code[self.__asmcode_add_replace] = 'D=D|M\n'
+            code = list(CodeWriter.__asmcode_add)
+            code[CodeWriter.__asmcode_add_replace] = 'D=D|M\n'
         elif command == 'not':
-            code = list(self.__asmcode_neg)
-            code[self.__asmcode_neg_replace] = 'M=!M\n'
+            code = list(CodeWriter.__asmcode_neg)
+            code[CodeWriter.__asmcode_neg_replace] = 'M=!M\n'
         else:
             assert False
 
@@ -185,53 +185,53 @@ class CodeWriter:
                     'M=M+1\n',  # SP+=1
                 ]
             elif segment == 'local':
-                code = list(self.__asmcode_push_local)
-                code[self.__asmcode_push_local_format] = code[
-                    self.__asmcode_push_local_format
+                code = list(CodeWriter.__asmcode_push_local)
+                code[CodeWriter.__asmcode_push_local_format] = code[
+                    CodeWriter.__asmcode_push_local_format
                 ].format(index=index)
             elif segment == 'argument':
-                code = list(self.__asmcode_push_local)
-                code[self.__asmcode_push_local_replace] = '@ARG\n'
-                code[self.__asmcode_push_local_format] = code[
-                    self.__asmcode_push_local_format
+                code = list(CodeWriter.__asmcode_push_local)
+                code[CodeWriter.__asmcode_push_local_replace] = '@ARG\n'
+                code[CodeWriter.__asmcode_push_local_format] = code[
+                    CodeWriter.__asmcode_push_local_format
                 ].format(index=index)
             elif segment == 'this':
-                code = list(self.__asmcode_push_local)
-                code[self.__asmcode_push_local_replace] = '@THIS\n'
-                code[self.__asmcode_push_local_format] = code[
-                    self.__asmcode_push_local_format
+                code = list(CodeWriter.__asmcode_push_local)
+                code[CodeWriter.__asmcode_push_local_replace] = '@THIS\n'
+                code[CodeWriter.__asmcode_push_local_format] = code[
+                    CodeWriter.__asmcode_push_local_format
                 ].format(index=index)
             elif segment == 'that':
-                code = list(self.__asmcode_push_local)
-                code[self.__asmcode_push_local_replace] = '@THAT\n'
-                code[self.__asmcode_push_local_format] = code[
-                    self.__asmcode_push_local_format
+                code = list(CodeWriter.__asmcode_push_local)
+                code[CodeWriter.__asmcode_push_local_replace] = '@THAT\n'
+                code[CodeWriter.__asmcode_push_local_format] = code[
+                    CodeWriter.__asmcode_push_local_format
                 ].format(index=index)
             elif segment == 'temp':
                 if 0 <= index <= 7:
-                    code = list(self.__asmcode_push_temp)
-                    code[self.__asmcode_push_temp_format] = code[
-                        self.__asmcode_push_temp_format
+                    code = list(CodeWriter.__asmcode_push_temp)
+                    code[CodeWriter.__asmcode_push_temp_format] = code[
+                        CodeWriter.__asmcode_push_temp_format
                     ].format(Rname=f'R{5 + index}')
                 else:
                     return False
             elif segment == 'pointer':
                 if index == 0:
-                    code = list(self.__asmcode_push_temp)
-                    code[self.__asmcode_push_temp_format] = code[
-                        self.__asmcode_push_temp_format
+                    code = list(CodeWriter.__asmcode_push_temp)
+                    code[CodeWriter.__asmcode_push_temp_format] = code[
+                        CodeWriter.__asmcode_push_temp_format
                     ].format(Rname='THIS')
                 elif index == 1:
-                    code = list(self.__asmcode_push_temp)
-                    code[self.__asmcode_push_temp_format] = code[
-                        self.__asmcode_push_temp_format
+                    code = list(CodeWriter.__asmcode_push_temp)
+                    code[CodeWriter.__asmcode_push_temp_format] = code[
+                        CodeWriter.__asmcode_push_temp_format
                     ].format(Rname='THAT')
                 else:
                     return False
             elif segment == 'static':
-                code = list(self.__asmcode_push_temp)
-                code[self.__asmcode_push_temp_format] = code[
-                    self.__asmcode_push_temp_format
+                code = list(CodeWriter.__asmcode_push_temp)
+                code[CodeWriter.__asmcode_push_temp_format] = code[
+                    CodeWriter.__asmcode_push_temp_format
                 ].format(Rname=f'{self.__parsing_filename}.{index}')
             else:
                 return False
@@ -239,53 +239,53 @@ class CodeWriter:
             if segment == 'constant':
                 return False
             elif segment == 'local':
-                code = list(self.__asmcode_pop_local)
-                code[self.__asmcode_pop_local_format] = code[
-                    self.__asmcode_pop_local_format
+                code = list(CodeWriter.__asmcode_pop_local)
+                code[CodeWriter.__asmcode_pop_local_format] = code[
+                    CodeWriter.__asmcode_pop_local_format
                 ].format(index=index)
             elif segment == 'argument':
-                code = list(self.__asmcode_pop_local)
-                code[self.__asmcode_pop_local_replace] = '@ARG\n'
-                code[self.__asmcode_pop_local_format] = code[
-                    self.__asmcode_pop_local_format
+                code = list(CodeWriter.__asmcode_pop_local)
+                code[CodeWriter.__asmcode_pop_local_replace] = '@ARG\n'
+                code[CodeWriter.__asmcode_pop_local_format] = code[
+                    CodeWriter.__asmcode_pop_local_format
                 ].format(index=index)
             elif segment == 'this':
-                code = list(self.__asmcode_pop_local)
-                code[self.__asmcode_pop_local_replace] = '@THIS\n'
-                code[self.__asmcode_pop_local_format] = code[
-                    self.__asmcode_pop_local_format
+                code = list(CodeWriter.__asmcode_pop_local)
+                code[CodeWriter.__asmcode_pop_local_replace] = '@THIS\n'
+                code[CodeWriter.__asmcode_pop_local_format] = code[
+                    CodeWriter.__asmcode_pop_local_format
                 ].format(index=index)
             elif segment == 'that':
-                code = list(self.__asmcode_pop_local)
-                code[self.__asmcode_pop_local_replace] = '@THAT\n'
-                code[self.__asmcode_pop_local_format] = code[
-                    self.__asmcode_pop_local_format
+                code = list(CodeWriter.__asmcode_pop_local)
+                code[CodeWriter.__asmcode_pop_local_replace] = '@THAT\n'
+                code[CodeWriter.__asmcode_pop_local_format] = code[
+                    CodeWriter.__asmcode_pop_local_format
                 ].format(index=index)
             elif segment == 'temp':
                 if 0 <= index <= 7:
-                    code = list(self.__asmcode_pop_temp)
-                    code[self.__asmcode_pop_temp_format] = code[
-                        self.__asmcode_pop_temp_format
+                    code = list(CodeWriter.__asmcode_pop_temp)
+                    code[CodeWriter.__asmcode_pop_temp_format] = code[
+                        CodeWriter.__asmcode_pop_temp_format
                     ].format(Rname=f'R{5 + index}')
                 else:
                     return False
             elif segment == 'pointer':
                 if index == 0:
-                    code = list(self.__asmcode_pop_temp)
-                    code[self.__asmcode_pop_temp_format] = code[
-                        self.__asmcode_pop_temp_format
+                    code = list(CodeWriter.__asmcode_pop_temp)
+                    code[CodeWriter.__asmcode_pop_temp_format] = code[
+                        CodeWriter.__asmcode_pop_temp_format
                     ].format(Rname='THIS')
                 elif index == 1:
-                    code = list(self.__asmcode_pop_temp)
-                    code[self.__asmcode_pop_temp_format] = code[
-                        self.__asmcode_pop_temp_format
+                    code = list(CodeWriter.__asmcode_pop_temp)
+                    code[CodeWriter.__asmcode_pop_temp_format] = code[
+                        CodeWriter.__asmcode_pop_temp_format
                     ].format(Rname='THAT')
                 else:
                     return False
             elif segment == 'static':
-                code = list(self.__asmcode_pop_temp)
-                code[self.__asmcode_pop_temp_format] = code[
-                    self.__asmcode_pop_temp_format
+                code = list(CodeWriter.__asmcode_pop_temp)
+                code[CodeWriter.__asmcode_pop_temp_format] = code[
+                    CodeWriter.__asmcode_pop_temp_format
                 ].format(Rname=f'{self.__parsing_filename}.{index}')
             else:
                 return False
@@ -294,6 +294,6 @@ class CodeWriter:
         return True
 
     def close(self) -> None:
-        with open(self.__pathname, 'w') as f:
+        with open(self.__pathname, 'w', encoding='utf8') as f:
             f.writelines(self.__asm_codes)
         print(f'Output: {self.__pathname}')

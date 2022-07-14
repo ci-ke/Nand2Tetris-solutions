@@ -1,7 +1,7 @@
 import os
 from typing import List, NoReturn
 
-from .common import *
+from .common import CompileError, COMMAND_TYPE, SymbolChecker
 
 
 class Parser:
@@ -16,7 +16,7 @@ class Parser:
         if not os.path.isfile(pathname):
             raise CompileError(f'No such file: {pathname}')
 
-        with open(pathname, 'r') as f:
+        with open(pathname, 'r', encoding='utf8') as f:
             for number, line in enumerate(f):
                 if (index := line.find('//')) != -1:
                     line = line[:index]

@@ -1,7 +1,7 @@
 import os
 from typing import List
 
-from .common import *
+from .common import CompileError, COMMAND_TYPE, SymbolChecker
 from .Parser import Parser
 from . import Code
 from .SymbolTable import SymbolTable
@@ -59,7 +59,7 @@ class Assembler:
 
     def __output(self) -> None:
         hack_pathname = os.path.splitext(self.__pathname)[0] + '.hack'
-        with open(hack_pathname, 'w') as f:
+        with open(hack_pathname, 'w', encoding='utf8') as f:
             f.writelines(self.__hack_codes)
         print(f'Output: {hack_pathname}')
 

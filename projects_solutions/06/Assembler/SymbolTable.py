@@ -30,7 +30,7 @@ class SymbolTable:
 
     def __init__(self) -> None:
         self.__table: Dict[str, int] = {}
-        self.__table.update(self.__PREDEFINED_SYMBOL)
+        self.__table.update(SymbolTable.__PREDEFINED_SYMBOL)
 
     def add_entry(self, symbol: str, address: int) -> None:
         assert not self.contains(symbol)

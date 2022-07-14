@@ -1,7 +1,7 @@
 import os
 from typing import NoReturn, Tuple
 
-from .common import *
+from .common import CompileError, TOKEN_TYPE, IdentifierChecker
 
 
 class JackTokenizer:
@@ -104,7 +104,7 @@ class JackTokenizer:
                 self.__next_index += 1
                 if self.__next_index >= len(self.__source):
                     break
-        elif self.__source[self.__next_index] in self.__symbols:
+        elif self.__source[self.__next_index] in JackTokenizer.__symbols:
             self.__next_index += 1
         elif self.__source[self.__next_index] == '"':
             self.__next_index += 1
@@ -152,9 +152,9 @@ class JackTokenizer:
         return ret_token, ret_type
 
     def token_type(self) -> TOKEN_TYPE:
-        if self.__current_token in self.__keywords:
+        if self.__current_token in JackTokenizer.__keywords:
             return TOKEN_TYPE.KEYWORD
-        elif self.__current_token in self.__symbols:
+        elif self.__current_token in JackTokenizer.__symbols:
             return TOKEN_TYPE.SYMBOL
         elif IdentifierChecker.legal_identifier(self.__current_token):
             return TOKEN_TYPE.IDENTIFIER

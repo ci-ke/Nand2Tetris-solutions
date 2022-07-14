@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from .common import *
+from .common import TOKEN_TYPE, SCOPE_TYPE
 from .JackTokenizer import JackTokenizer
 from .SymbolTable import SymbolTable
 from .VMWriter import VMWriter
@@ -36,7 +36,7 @@ class CompilationEngine:
         else:
             if (
                 self.__tokenizer.token_type() == token_type
-                and self.__func[token_type](self.__tokenizer) == target
+                and CompilationEngine.__func[token_type](self.__tokenizer) == target
             ):
                 return
             else:

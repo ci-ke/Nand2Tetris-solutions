@@ -1,7 +1,7 @@
 import os
 from typing import List
 
-from .common import *
+from .common import CompileError
 from .JackTokenizer import JackTokenizer
 from .CompilationEngine import CompilationEngine
 
@@ -35,7 +35,7 @@ class JackCompiler:
         output_list: List[str] = []
         CompilationEngine(tokenizer, output_list)
 
-        with open(tokenizer.vm_pathname(), 'w') as f:
+        with open(tokenizer.vm_pathname(), 'w', encoding='utf8') as f:
             f.writelines(output_list)
         print(f'Output: {tokenizer.vm_pathname()}')
 

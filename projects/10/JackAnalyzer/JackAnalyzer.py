@@ -1,7 +1,7 @@
 import os
 from typing import List
 
-from .common import *
+from .common import CompileError, TOKEN_TYPE
 from .JackTokenizer import JackTokenizer
 from .CompilationEngine import CompilationEngine
 
@@ -81,7 +81,7 @@ class JackAnalyzer:
 
         output_list.append('</tokens>\n')
 
-        with open(self.__xmlT_pathname(tokenizer), 'w') as f:
+        with open(self.__xmlT_pathname(tokenizer), 'w', encoding='utf8') as f:
             f.writelines(output_list)
         print(f'Output: {self.__xmlT_pathname(tokenizer)}')
 
@@ -89,7 +89,7 @@ class JackAnalyzer:
         output_list: List[str] = []
         CompilationEngine(tokenizer, output_list)
 
-        with open(self.__xml_pathname(tokenizer), 'w') as f:
+        with open(self.__xml_pathname(tokenizer), 'w', encoding='utf8') as f:
             f.writelines(output_list)
         print(f'Output: {self.__xml_pathname(tokenizer)}')
 

@@ -1,6 +1,6 @@
 # Usage #
 
-Directly use: ```python -m JackAnalyzer <filename|dirname>```
+Directly use: ```python -m JackAnalyzer <filename | dirname>```
 
 Build all test objects: ```python make.py build```
 

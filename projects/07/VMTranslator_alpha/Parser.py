@@ -1,7 +1,7 @@
 import os
 from typing import List, NoReturn
 
-from .common import *
+from .common import CompileError, COMMAND_TYPE
 
 
 class Parser:
@@ -37,7 +37,7 @@ class Parser:
         if not os.path.isfile(pathname):
             raise CompileError(f'No such file: {pathname}')
 
-        with open(pathname, 'r') as f:
+        with open(pathname, 'r', encoding='utf8') as f:
             for number, line in enumerate(f):
                 if (index := line.find('//')) != -1:
                     line = line[:index]
@@ -58,10 +58,10 @@ class Parser:
                 self.wrong_msg('Bad command, too many args')
 
     def command_type(self) -> COMMAND_TYPE:
-        if self.__current_command[0] not in self.__command_name_type:
+        if self.__current_command[0] not in Parser.__command_name_type:
             self.wrong_msg('Bad command name')
         else:
-            return self.__command_name_type[self.__current_command[0]]
+            return Parser.__command_name_type[self.__current_command[0]]
 
     def arg1(self) -> str:
         assert self.command_type() != COMMAND_TYPE.C_RETURN
