@@ -47,7 +47,7 @@ if __name__ == '__main__':
             pass
 
     elif sys.argv[1] == 'open':
-        srcpath = os.getcwd()
+        srcpath = os.path.join(os.getcwd(), 'placeholder')
         os.chdir('../../tools/bin')
         tgtpath = os.getcwd()
         with open(tgtpath + '/' + 'Virtual Machine Emulator.dat', 'w', encoding='utf8') as fp:
